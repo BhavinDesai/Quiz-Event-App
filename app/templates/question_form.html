@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Add Question - {{ quiz.title }}{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">
+  Add Question – {{ quiz.title }}
+</h1>
+
+<form method="post" class="bg-white shadow rounded-lg p-6 space-y-4">
+  {% csrf_token %}
+
+  <div>
+    <label class="block font-medium mb-1">{{ form.text.label }}</label>
+    {{ form.text }}
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block font-medium mb-1">{{ form.option1.label }}</label>
+      {{ form.option1 }}
+    </div>
+    <div>
+      <label class="block font-medium mb-1">{{ form.option2.label }}</label>
+      {{ form.option2 }}
+    </div>
+    <div>
+      <label class="block font-medium mb-1">{{ form.option3.label }}</label>
+      {{ form.option3 }}
+    </div>
+    <div>
+      <label class="block font-medium mb-1">{{ form.option4.label }}</label>
+      {{ form.option4 }}
+    </div>
+  </div>
+
+  <div>
+    <p class="font-medium mb-1">{{ form.correct_option.label }}</p>
+    <div class="space-y-1">
+      {{ form.correct_option }}
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+  >
+    Save Question
+  </button>
+  <a
+    href="{% url 'app:manage_questions' quiz.id %}"
+    class="ml-2 text-gray-600 hover:underline"
+  >
+    Cancel
+  </a>
+</form>
+{% endblock %}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Quiz & Events App{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <nav class="bg-blue-600 text-white px-6 py-4">
+      <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <a href="{% url 'app:home' %}" class="font-semibold text-lg">
+          Quiz & Events
+        </a>
+        <div class="space-x-4">
+          <a href="{% url 'app:quiz_dashboard' %}" class="hover:underline">Add Quiz</a>
+          <a href="{% url 'app:quiz_list' %}" class="hover:underline">Quizzes</a>
+          <a href="{% url 'app:event_list' %}" class="hover:underline">Events</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto mt-8 px-4">
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Questions - {{ quiz.title }}{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-4">
+  <div>
+    <h1 class="text-2xl font-semibold">Manage Questions</h1>
+    <p class="text-gray-600">Quiz: {{ quiz.title }}</p>
+  </div>
+  <a
+    href="{% url 'app:add_question' quiz.id %}"
+    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+  >
+    + Add Question
+  </a>
+</div>
+
+{% if questions %}
+  <div class="space-y-4">
+    {% for question in questions %}
+      <div class="bg-white shadow rounded-lg p-4">
+        <p class="font-medium mb-2">
+          Q{{ forloop.counter }}. {{ question.text }}
+        </p>
+        <ul class="list-disc list-inside text-sm text-gray-700">
+          {% for ans in question.answers.all %}
+            <li>
+              {% if ans.is_correct %}
+                <span class="font-semibold text-green-600">{{ ans.text }} (correct)</span>
+              {% else %}
+                {{ ans.text }}
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No questions yet. Click "Add Question" to create one.</p>
+{% endif %}
+
+<a
+  href="{% url 'app:quiz_dashboard' %}"
+  class="inline-block mt-4 text-gray-600 hover:underline"
+>
+  ← Back to Dashboard
+</a>
+{% endblock %}

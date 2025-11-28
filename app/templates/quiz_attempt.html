@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}{{ quiz.title }} - Attempt{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">{{ quiz.title }}</h1>
+<p class="mb-6 text-gray-700">{{ quiz.description }}</p>
+
+<form method="post" action="{% url 'app:quiz_submit' quiz.id %}" class="space-y-6">
+  {% csrf_token %}
+  <div>
+    <label class="block font-medium mb-1">Your name (optional)</label>
+    <input
+      type="text"
+      name="user_name"
+      class="border rounded px-3 py-2 w-full"
+      placeholder="Enter your name"
+    />
+  </div>
+
+  {% for question in questions %}
+    <div class="bg-white shadow rounded-lg p-4">
+      <p class="font-medium mb-2">
+        Q{{ forloop.counter }}. {{ question.text }}
+      </p>
+      <div class="space-y-1">
+        {% for answer in question.answers.all %}
+          <label class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="question_{{ question.id }}"
+              value="{{ answer.id }}"
+              class="h-4 w-4"
+            />
+            <span>{{ answer.text }}</span>
+          </label>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+
+  <button
+    type="submit"
+    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+  >
+    Submit Quiz
+  </button>
+</form>
+{% endblock %}

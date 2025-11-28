@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Quiz & Events{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow rounded-lg p-6">
+  <h1 class="text-2xl font-semibold mb-4">Welcome</h1>
+  <p class="mb-4">
+    This is a simple Quiz and Events app. You can attempt quizzes and view upcoming events.
+  </p>
+  <div class="flex space-x-4">
+    <a
+      href="{% url 'app:quiz_list' %}"
+      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >View Quizzes</a
+    >
+    <a
+      href="{% url 'app:event_list' %}"
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+      >View Events</a
+    >
+
+  </div>
+</div>
+{% endblock %}

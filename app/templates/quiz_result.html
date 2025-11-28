@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Result - {{ submission.quiz.title }}{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow rounded-lg p-6">
+  <h1 class="text-2xl font-semibold mb-4">Quiz Result</h1>
+  <p class="mb-2">
+    Quiz: <span class="font-semibold">{{ submission.quiz.title }}</span>
+  </p>
+  <p class="mb-2">
+    User: <span class="font-semibold">{{ submission.user_name }}</span>
+  </p>
+  <p class="mb-4">
+    Score:
+    <span class="font-semibold">{{ submission.score }} / {{ total_questions }}</span>
+  </p>
+
+  <h2 class="text-xl font-semibold mb-2">Your answers</h2>
+  <div class="space-y-3">
+    {% for user_answer in submission.answers.all %}
+      <div class="border rounded p-3">
+        <p class="font-medium mb-1">
+          {{ forloop.counter }}. {{ user_answer.question.text }}
+        </p>
+        <p>
+          Selected:
+          <span
+            class="{% if user_answer.is_correct %}text-green-600{% else %}text-red-600{% endif %}"
+          >
+            {% if user_answer.answer %}{{ user_answer.answer.text }}{% else %}No answer{% endif %}
+          </span>
+        </p>
+        {% if not user_answer.is_correct %}
+          <p class="text-sm text-gray-600 mt-1">
+            Correct:
+            {% for ans in user_answer.question.answers.all %}
+              {% if ans.is_correct %}
+                {{ ans.text }}
+              {% endif %}
+            {% endfor %}
+          </p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <a
+    href="{% url 'app:quiz_list' %}"
+    class="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+  >
+    Back to quizzes
+  </a>
+</div>
+{% endblock %}
